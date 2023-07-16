@@ -1,0 +1,258 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlserver"
+  url      = env("DATABASE_URL")
+}
+
+model Afiliados {
+  Id                  Int       @id(map: "PK__Afiliado__3214EC0750B81F01") @default(autoincrement())
+  Cliente             String    @db.VarChar(500)
+  IdCliente           Int
+  PlanMutual          String?   @db.VarChar(500)
+  PacientesACargo     String?   @db.VarChar(Max)
+  Vencimiento         DateTime? @db.Date
+  SuscripcionActivaId Int?
+  Estado              Boolean?
+  Inicio              DateTime? @db.Date
+}
+
+model AfiliadosPagos {
+  Id            Int      @id(map: "PK__Afiliado__3214EC0752BB7113") @default(autoincrement())
+  Cliente       String   @db.VarChar(500)
+  IdCliente     Int
+  IdPago        String   @db.VarChar(100)
+  FechaPago     DateTime @db.Date
+  Monto         String   @db.VarChar(100)
+  MedioDePago   String   @db.VarChar(500)
+  Comprobantes  Bytes?
+  Observaciones String?  @db.VarChar(Max)
+}
+
+model Ayuda {
+  Opcion    String? @db.VarChar(50)
+  Contenido String? @db.VarChar(1000)
+  Id        Int     @id(map: "PK__Ayuda__3214EC078B11D439") @default(autoincrement())
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model Balanceados {
+  Producto       String    @db.VarChar(200)
+  Tipo           String?   @db.VarChar(20)
+  Unidad         Int?
+  Precio_coste   String?   @db.VarChar(10)
+  Precio_final   String    @db.VarChar(10)
+  Ultimo_ingreso DateTime? @db.Date
+  Prospecto      String?   @db.VarChar(Max)
+  Archivo        Bytes?
+
+  @@ignore
+}
+
+model Calendario {
+  cliente  String?   @db.VarChar(50)
+  paciente String?   @db.VarChar(50)
+  vacuna   String?   @db.VarChar(50)
+  fecha    DateTime? @db.Date
+  telefono String?   @db.VarChar(50)
+  id       Int       @id(map: "PK_Calendario") @default(autoincrement())
+  estado   String?   @db.VarChar(50)
+}
+
+model Clientes {
+  id_clients      Int     @id(map: "PK_clientes_1") @default(autoincrement())
+  client_name     String? @db.NVarChar(50)
+  client_address  String? @db.NVarChar(250)
+  client_phone    String? @db.NVarChar(50)
+  client_phone2   String? @db.NVarChar(50)
+  client_email    String? @db.NVarChar(50)
+  client_province String? @db.NVarChar(50)
+}
+
+model Clinichistory {
+  Idhc                  String?   @db.NVarChar(50)
+  id_pacienthistory     String?   @db.VarChar(50)
+  Idcliente             String?   @db.VarChar(50)
+  consult_fecha         DateTime? @db.Date
+  consult_hora          DateTime? @db.Time
+  consult_temp          String?   @db.VarChar(50)
+  consult_descripcion   String?   @db.VarChar(Max)
+  consult_derivacion    Boolean?
+  consult_estudios      Bytes?
+  consult_estudiostype  String?   @db.VarChar(5)
+  consult_estudios2     Bytes?
+  consult_estudiostype2 String?   @db.VarChar(5)
+  consult_estudios3     Bytes?
+  consult_estudiostype3 String?   @db.VarChar(5)
+  consult_estudios4     Bytes?
+  consult_estudiostype4 String?   @db.VarChar(5)
+  consult_estudios5     Bytes?
+  consult_estudiostype5 String?   @db.VarChar(5)
+  consult_id            Int?
+  id                    Int       @id(map: "PK_Clinichistory") @default(autoincrement())
+  consult_peso          String?   @db.VarChar(10)
+}
+
+model DietasTratamientos {
+  Id          Int      @id(map: "PK_DietasTratamientos") @default(autoincrement())
+  Nombre      String   @db.VarChar(50)
+  Tipo        String   @db.VarChar(25)
+  Descripcion String   @db.VarChar(Max)
+  FechaAlta   DateTime @db.Date
+}
+
+model Distribuidoras {
+  dist_name     String  @id(map: "PK_Distribuidoras_1") @db.VarChar(50)
+  dist_CUIT     String? @db.VarChar(80)
+  dist_address  String? @db.VarChar(Max)
+  dist_phone    String? @db.VarChar(50)
+  dist_email    String? @db.VarChar(50)
+  dist_comments String? @db.VarChar(Max)
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model Egresos {
+  fecha        String? @db.NVarChar(50)
+  medicamentos String? @db.NVarChar(50)
+  accesorios   String? @db.NVarChar(50)
+  balanceados  String? @db.NVarChar(50)
+  vacunas      String? @db.NVarChar(50)
+  peluquerias  String? @db.NVarChar(50)
+  servicios    String? @db.NVarChar(50)
+  alquiler     String? @db.NVarChar(50)
+  csps         String? @db.NVarChar(50)
+  impuestos    String? @db.NVarChar(50)
+  laboratorio  String? @db.NVarChar(50)
+  otros        String? @db.NVarChar(50)
+  id           Int     @default(autoincrement())
+
+  @@ignore
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model HC {
+  Idhc                String?   @db.NVarChar(50)
+  id_pacienthistory   String?   @db.VarChar(50)
+  Idcliente           String?   @db.VarChar(50)
+  consult_fecha       DateTime? @db.Date
+  consult_hora        DateTime? @db.Time
+  consult_descripcion String?   @db.VarChar(Max)
+
+  @@ignore
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model Ingresos {
+  fecha        String? @db.NVarChar(50)
+  medicamentos String? @db.NVarChar(50)
+  accesorios   String? @db.NVarChar(50)
+  balanceados  String? @db.NVarChar(50)
+  consultas    String? @db.NVarChar(50)
+  cirugias     String? @db.NVarChar(50)
+  vacunas      String? @db.NVarChar(50)
+  peluquerias  String? @db.NVarChar(50)
+  laboratorio  String? @db.NVarChar(50)
+  id           Int     @default(autoincrement())
+
+  @@ignore
+}
+
+model Movimientos {
+  Id          Int       @id(map: "PK__Movimien__3214EC0763D56B67") @default(autoincrement())
+  Fecha       DateTime? @db.Date
+  Movimiento  String?   @db.VarChar(100)
+  Tipo        String?   @db.VarChar(10)
+  Comentarios String?   @db.VarChar(100)
+  Monto       Decimal?  @db.Decimal(10, 2)
+}
+
+model Mutual {
+  Id              Int     @id(map: "PK__Mutual__3214EC07009B6A72") @default(autoincrement())
+  NombrePlan      String  @db.VarChar(50)
+  PrecioPlan      String  @db.VarChar(50)
+  Caracteristicas String? @db.VarChar(Max)
+}
+
+model Pacientes {
+  pacient_idforch  Int       @default(autoincrement())
+  pacient_idforch2 String    @id(map: "PK_Pacientes") @db.VarChar(50)
+  id_pacientes     Int?
+  pacient_name     String?   @db.NVarChar(50)
+  pacient_cronic   Boolean?
+  pacient_race     String?   @db.NVarChar(50)
+  pacient_species  String?   @db.NVarChar(50)
+  pacient_sex      String?   @db.NVarChar(50)
+  pacient_DOB      String?   @db.NVarChar(50)
+  pacient_arrival  String?   @db.NVarChar(50)
+  pacient_colour   String?   @db.NVarChar(50)
+  pacient_DOD      String?   @db.NVarChar(50)
+  pacient_service  DateTime? @db.Date
+  pacient_comments String?   @db.NVarChar(450)
+  pacient_castrado Boolean?  @default(false, map: "DF_Pacientes_pacient_castrado")
+  pacient_breeder  Boolean?  @default(false, map: "DF_Pacientes_pacient_breeder")
+  pacient_adopted  Boolean?  @default(false, map: "DF_Pacientes_pacient_adopted")
+}
+
+model Recibos {
+  distribuidora String  @db.NVarChar(50)
+  monto         String? @db.NVarChar(50)
+  fecha         String? @db.NVarChar(50)
+  id            Int     @id(map: "PK_Recibos") @default(autoincrement())
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model Saldos {
+  fecha    String? @db.NVarChar(50)
+  cliente  String? @db.NVarChar(50)
+  paciente String? @db.NVarChar(50)
+  motivo   String? @db.NVarChar(50)
+  monto    String? @db.NVarChar(50)
+  id       Int     @default(autoincrement())
+
+  @@ignore
+}
+
+model SuscripcionesActivas {
+  Id                   Int      @id(map: "PK__Suscripc__3214EC0717EEB942") @default(autoincrement())
+  Cliente              String   @db.VarChar(500)
+  IdCliente            Int
+  FechaHasta           DateTime @db.Date
+  PlanActivo           String?  @db.VarChar(500)
+  PlanId               String?  @db.VarChar(50)
+  Comentarios          String?  @db.VarChar(Max)
+  RenovacionAutomatica Boolean?
+  Duracion             Int?
+  Tipo                 String?  @db.VarChar(10)
+}
+
+model Tratamientos {
+  TratamientosName    String?  @db.VarChar(50)
+  TratamientosDias    Int?
+  TratamientosMostrar Boolean?
+  TratamientosID      Int      @id(map: "PK__Tratamie__1130C91ADE8F6FF4") @default(autoincrement())
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model usuarios {
+  id_user  Int     @default(autoincrement())
+  usuario  String? @db.VarChar(50)
+  account  String? @db.VarChar(50)
+  password String? @db.VarChar(50)
+
+  @@ignore
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model Veterinarias {
+  vet_name      String  @db.NVarChar(50)
+  vet_address   String? @db.NVarChar(Max)
+  vet_phone     String? @db.NChar(50)
+  vet_email     String? @db.NVarChar(50)
+  vet_specialty String? @db.NVarChar(200)
+  vet_names     String? @db.NVarChar(Max)
+  vet_comments  String? @db.NVarChar(Max)
+
+  @@ignore
+}
