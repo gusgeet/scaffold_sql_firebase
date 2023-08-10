@@ -2,7 +2,6 @@ const express = require('express');
 const app = express();
 const prisma = require('@prisma/client');
 const uuid = require('uuid')
-const fs = require('fs')
 
 async function getPacientes () {
   const Prisma = new prisma.PrismaClient()
@@ -33,9 +32,7 @@ async function getClientes() {
 
 // Get request
 app.get('/', async function (req, res) {
-  let importados = 0
   var basededatos = []
-  var todoCargado = []
   let clientes = await getClientes()
   clientes.forEach(cliente => {
     cliente = JSON.stringify(cliente)
@@ -66,22 +63,6 @@ app.get('/', async function (req, res) {
   })
   basededatos.push(hc)
 
-
-  // basededatos.forEach(cliente => {
-  //   console.log(cliente)
-  //   getPacientes().then(pacientes => {
-  //     pacientes.forEach(paciente => {
-  //       paciente.newId = cliente.id
-  //     })
-  //     let clienteConPacientes = {
-  //       cliente: cliente,
-  //       pacientes: pacientes
-  //     }
-  //     clienteConPacientes = JSON.stringify(clienteConPacientes)
-  //     todoCargado.push(clienteConPacientes)
-  //   })
-  // })
-  
   res.send(basededatos)
   
 });
